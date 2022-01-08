@@ -1,0 +1,41 @@
+{
+  "name": "friendsoftypo3headless/headless-ttaddress",
+  "type": "typo3-cms-extension",
+  "description": "This extension provides integration with tt_address to output content from TYPO3 in JSON format.",
+  "keywords": [
+    "TYPO3",
+    "headless",
+    "pwa",
+    "json",
+    "tt_address"
+  ],
+  "license": [
+    "MIT"
+  ],
+  "require": {
+    "typo3/cms-core": "^10.4 || ^11.5"
+  },
+  "require-dev": {
+    "helmich/typo3-typoscript-lint": "^2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Friendsoftypo3headless\\HeadlessKesearch\\": "Classes"
+    }
+  },
+  "suggest": {
+    "friendsoftypo3/tt-address": "^5.0 || ^6.0",
+    "friendsoftypo3/headless": "^2.6 || ^3.0"
+  },
+  "extra": {
+     "typo3/cms": {
+        "extension-key": "headless_ttaddress"
+     }
+  },
+  "config": {
+    "allow-plugins": {
+      "typo3/cms-composer-installers": true,
+      "typo3/class-alias-loader": true
+    }
+  }
+}

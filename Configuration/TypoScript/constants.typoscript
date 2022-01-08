@@ -1,0 +1,7 @@
+plugin.tx_ttaddress {
+  view {
+    templateRootPath = EXT:headless_ttaddress/Resources/Private/Templates/
+    partialRootPath = EXT:headless_ttaddress/Resources/Private/Partials/
+    layoutRootPath = EXT:headless_ttaddress/Resources/Private/Layouts/
+  }
+}

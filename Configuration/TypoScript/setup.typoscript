@@ -1,0 +1,25 @@
+tt_content.list =< lib.contentElementWithHeader
+tt_content.list {
+  fields {
+    content {
+      fields {
+        data = CASE
+        data {
+          key.field = list_type
+
+          ttaddress_listview = USER
+          ttaddress_listview {
+            userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+            vendorName = FriendsOfTYPO3
+            extensionName = TtAddress
+            pluginName = ListView
+            controller = Address
+            view < plugin.tx_ttaddress.view
+            persistence < plugin.tx_ttaddress.persistence
+            settings < plugin.tx_ttaddress.settings
+          }
+        }
+      }
+    }
+  }
+}

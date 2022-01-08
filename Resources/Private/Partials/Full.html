@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:spaceless>
+    <f:format.raw>
+        <f:format.json value="{
+            fullName: address.fullName,
+            position: '{f:render(partial:\'Address\', section: \'position\', arguments: \'{_all}\')}',
+            image: {
+                url: '{f:if(condition: address.image,then: \'{f:uri.image(image: address.firstimage, width: 600)}\')}',
+                alt: address.firstImage.originalResource.alt,
+                title: address.firstImage.originalResource.title,
+                description: '{f:if(condition: address.firstImage.originalResource.description, then: \'{address.firstImage.originalResource.description ->f:format.nl2br()}\')}'
+            },
+            description: '{address.description -> f:format.striptags()}',
+            building: address.building,
+            room: address.room,
+            address: '{f:render(section:\'address\', partial: \'Address\', arguments: \'{_all}\') -> headless:format.json.decode()}',
+            contact: '{f:render(section:\'contact\', partial: \'Address\', arguments: \'{_all}\') -> headless:format.json.decode()}',
+            social: '{f:render(section:\'social\', partial: \'Address\', arguments: \'{_all}\') -> headless:format.json.decode()}'
+        }"/>
+    </f:format.raw>
+</f:spaceless>
+
+</html>

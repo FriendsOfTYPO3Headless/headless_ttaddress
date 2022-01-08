@@ -1,0 +1,57 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:ttaddr="http://typo3.org/ns/FriendsOfTYPO3/TtAddress/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:section name="address">
+    <f:spaceless>
+        <f:format.raw>
+            <f:format.json value="{
+                address: address.address,
+                zip: address.zip,
+                city: address.city,
+                country: address.country
+            }"/>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
+
+<f:section name="position">
+    <f:spaceless>
+        <f:if condition="{address.position}">
+            {address.position -> f:format.striptags()}
+        </f:if>
+    </f:spaceless>
+</f:section>
+
+<f:section name="contact">
+    <f:spaceless>
+        <f:format.raw>
+            <f:format.json value="{
+                phone: address.phone,
+                cleanedPhone: address.cleanedPhone,
+                mobile: address.mobile,
+                cleanedMobile: address.cleanedMobile,
+                fax: address.fax,
+                email: address.email,
+                www: address.www,
+                wwwSimplified: address.wwwSimplified,
+                birthday: '{address.birthday -> f:format.date(format:\'%d.%m.%Y\')}'
+            }"/>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
+
+<f:section name="social">
+    <f:spaceless>
+        <f:format.raw>
+            <f:format.json value="{
+                skype: address.skype,
+                twitter: address.twitter,
+                facebook: address.facebook,
+                linkedin: address.linkedin
+            }"/>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
+
+
