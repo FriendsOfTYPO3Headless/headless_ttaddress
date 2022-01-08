@@ -1,0 +1,14 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:spaceless>
+    <f:format.raw>
+        <f:format.json value="{
+            fullName: address.fullName,
+            position: address.position,
+            address: '{f:render(section:\'address\', partial: \'Address\', arguments: \'{_all}\') -> headless:format.json.decode()}',
+            social: '{f:render(section:\'social\', partial: \'Address\', arguments: \'{_all}\') -> headless:format.json.decode()}',
+            image: '{f:render(section: \'Image\', partial: \'Address\', arguments: \'{_all}\') -> headless:format.json.decode()}',
+            url: '{f:uri.action(action: \'show\', arguments: \'{address: address}\', pageUid: settings.singlePid, absolute: 1)}'
+        }"/>
+    </f:format.raw>
+</f:spaceless>

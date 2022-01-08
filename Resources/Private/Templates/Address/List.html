@@ -4,36 +4,32 @@
 <f:render section="displayMode_{settings.displayMode}" arguments="{_all}"/>
 
 <f:section name="displayMode_list">
-    <!--TYPO3SEARCH_end-->
     <f:if condition="{settings.hidePagination}">
         <f:then>
-            <f:for each="{addresses}" as="address" iteration="iterator">
-                <f:render partial="ListItem" arguments="{_all}"/>
-            </f:for>
+            <f:spaceless>
+                <f:format.raw>
+                    {"list": [<f:for each="{addresses}" as="address" iteration="iterator">
+                            <f:render partial="ListItem" arguments="{_all}"/>
+                            {f:if(condition: iterator.isLast, else: ',')}
+                        </f:for>]
+                    }
+                </f:format.raw>
+            </f:spaceless>
         </f:then>
         <f:else>
-            <f:if condition="{newPagination}">
-                <f:then>
-                    <f:if condition="{settings.paginate.insertAbove}">
-                        <f:render partial="Pagination"
-                                  arguments="{pagination: pagination.pagination, pages: pagination.pages, paginator: pagination.paginator}"/>
-                    </f:if>
-                    <f:for each="{pagination.paginator.paginatedItems}" as="address" iteration="iterator">
-                        <f:render partial="ListItem" arguments="{_all}"/>
-                    </f:for>
-                    <f:if condition="{settings.paginate.insertBelow}">
-                        <f:render partial="Pagination"
-                                  arguments="{pagination: pagination.pagination, pages: pagination.pages, paginator: pagination.paginator}"/>
-                    </f:if>
-                </f:then>
-                <f:else>
-                    <f:comment>PAGINATION!</f:comment>
-                </f:else>
-            </f:if>
-
+            <f:spaceless>
+                <f:format.raw>
+                    {
+                        "pagination": <f:render partial="Pagination" arguments="{pagination: pagination.pagination, pages: pagination.pages, paginator: pagination.paginator}" />,
+                        "list": [<f:for each="{pagination.paginator.paginatedItems}" as="address" iteration="iterator">
+                            <f:render partial="ListItem" arguments="{_all}"/>
+                            {f:if(condition: iterator.isLast,else: ',')}
+                        </f:for>]
+                    }
+                </f:format.raw>
+            </f:spaceless>
         </f:else>
     </f:if>
-    <!--TYPO3SEARCH_begin-->
 </f:section>
 
 <f:section name="displayMode_single">
@@ -43,6 +39,7 @@
 </f:section>
 
 <f:section name="displayMode_map">
+    <f:comment>TODO: Convert to JSON template</f:comment>
     <f:render partial="Maps" section="{settings.map.rendering}" arguments="{_all}"/>
 </f:section>
 

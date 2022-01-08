@@ -1,6 +1,23 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:ttaddr="http://typo3.org/ns/FriendsOfTYPO3/TtAddress/ViewHelpers"
       data-namespace-typo3-fluid="true">
+
+<f:section name="general">
+    <f:spaceless>
+        <f:format.raw>
+            <f:format.json value="{
+                gender: address.gender,
+                title: address.title,
+                firstName: address.firstName,
+                middleName: address.middleName,
+                lastName: address.lastName,
+                fullName: address.fullName,
+                slug: address.slug,
+                image: '{f:render(section: \'Image\', arguments: \'{_all}\') -> headless:format.json.decode()}',
+                description: '{address.description -> f:format.striptags()}'
+            }"/>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
 
 <f:section name="address">
     <f:spaceless>
@@ -9,17 +26,12 @@
                 address: address.address,
                 zip: address.zip,
                 city: address.city,
-                country: address.country
+                region: address.region,
+                country: address.country,
+                latitude: address.latitude,
+                longitude: address.longitude
             }"/>
         </f:format.raw>
-    </f:spaceless>
-</f:section>
-
-<f:section name="position">
-    <f:spaceless>
-        <f:if condition="{address.position}">
-            {address.position -> f:format.striptags()}
-        </f:if>
     </f:spaceless>
 </f:section>
 
@@ -27,15 +39,28 @@
     <f:spaceless>
         <f:format.raw>
             <f:format.json value="{
+                email: address.email,
                 phone: address.phone,
                 cleanedPhone: address.cleanedPhone,
                 mobile: address.mobile,
                 cleanedMobile: address.cleanedMobile,
                 fax: address.fax,
-                email: address.email,
                 www: address.www,
                 wwwSimplified: address.wwwSimplified,
-                birthday: '{address.birthday -> f:format.date(format:\'%d.%m.%Y\')}'
+                birthday: '{address.birthday -> f:format.date(format:\'%Y-%m-%d\')}'
+            }"/>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
+
+<f:section name="company">
+    <f:spaceless>
+        <f:format.raw>
+            <f:format.json value="{
+                position: address.position,
+                company: address.company,
+                building: address.building,
+                room: address.room
             }"/>
         </f:format.raw>
     </f:spaceless>
@@ -54,4 +79,22 @@
     </f:spaceless>
 </f:section>
 
-
+<f:section name="Image">
+    <f:spaceless>
+        <f:format.raw>
+            <f:if condition="{address.image}">
+                <f:then>
+                    <f:format.json value="{
+                        url: '{f:if(condition: address.image,then: \'{f:uri.image(image: address.firstimage, width: 600)}\')}',
+                        alt: address.firstImage.originalResource.alt,
+                        title: address.firstImage.originalResource.title,
+                        description: '{f:if(condition: address.firstImage.originalResource.description, then: \'{address.firstImage.originalResource.description ->f:format.nl2br()}\')}'
+                    }"/>
+                </f:then>
+                <f:else>
+                    <f:format.json value="{}"/>
+                </f:else>
+            </f:if>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
