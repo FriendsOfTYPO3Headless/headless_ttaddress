@@ -1,0 +1,84 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:ttaddr="http://typo3.org/ns/FriendsOfTYPO3/TtAddress/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:section name="leaflet">
+    <f:spaceless>
+        <f:format.raw>
+            <f:format.json value="{
+                type: 'leaflet',
+                defaultPosition: {
+                   lat: settings.map.defaultPosition.lat,
+                   lng: settings.map.defaultPosition.lng
+                },
+                addresses: '{f:render(section: \'Addresses\', arguments: \'{_all}\') -> headless:format.json.decode()}'
+            }"/>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
+
+<f:section name="googleMaps">
+    <f:if condition="{settings.map.googleMaps.key}">
+        <f:then>
+            <f:spaceless>
+                <f:format.raw>
+                    <f:format.json value="{
+                        type: 'googleMaps',
+                        apiKey: settings.map.googleMaps.key,
+                        defaultPosition: {
+                           lat: settings.map.defaultPosition.lat,
+                           lng: settings.map.defaultPosition.lng
+                        },
+                        addresses: '{f:render(section: \'Addresses\', arguments: \'{_all}\') -> headless:format.json.decode()}'
+                    }"/>
+                </f:format.raw>
+            </f:spaceless>
+        </f:then>
+        <f:else>
+            <f:spaceless>
+                <f:format.raw>
+                    <f:format.json value="{
+                        error: '{f:translate(key: \'no_google_maps_key\')}'
+                    }"/>
+                </f:format.raw>
+            </f:spaceless>
+        </f:else>
+    </f:if>
+</f:section>
+
+<f:section name="staticGoogleMaps">
+    <f:spaceless>
+        <f:format.raw>
+            <f:if condition="{settings.map.staticGoogleMaps.parameters.key}">
+                <f:then>
+                    <f:format.json value="{
+                        type: 'googleMaps',
+                        link: '{ttaddr:staticGoogleMaps(parameters:settings.map.staticGoogleMaps.parameters,addresses:addresses)}'
+                    }"/>
+                </f:then>
+                <f:else>
+                    <f:format.json value="{
+                        error: '{f:translate(key: \'no_google_maps_key\')}'
+                    }"/>
+                </f:else>
+            </f:if>
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
+
+<f:section name="Addresses">
+    <f:spaceless>
+        <f:format.raw>
+            [<f:for each="{addresses}" as="address" iteration="addressIterator">
+                <f:format.json value="{
+                    latitude: address.latitude,
+                    longitude: address.longitude,
+                    fullName: address.fullName,
+                    link: '{f:uri.action(action:\'show\', arguments: \'{address: address}\', pageUid: settings.singlePid, absolute: 1)}',
+                    address: '{f:render(partial: \'Address\', section: \'address\', arguments: \'{_all}\') -> headless:format.json.decode()}'
+                }"/>
+                {f:if(condition: addressIterator.isLast,else: ',')}
+            </f:for>]
+        </f:format.raw>
+    </f:spaceless>
+</f:section>
