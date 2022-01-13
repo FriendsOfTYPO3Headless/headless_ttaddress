@@ -2,6 +2,7 @@
   "name": "friendsoftypo3headless/headless-ttaddress",
   "type": "typo3-cms-extension",
   "description": "This extension provides integration with tt_address to output content from TYPO3 in JSON format.",
+  "version": "1.0.0",
   "keywords": [
     "TYPO3",
     "headless",
@@ -17,11 +18,6 @@
   },
   "require-dev": {
     "helmich/typo3-typoscript-lint": "^2.5"
-  },
-  "autoload": {
-    "psr-4": {
-      "Friendsoftypo3headless\\HeadlessKesearch\\": "Classes"
-    }
   },
   "suggest": {
     "friendsoftypo3/tt-address": "^5.0 || ^6.0",
